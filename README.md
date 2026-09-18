@@ -28,6 +28,7 @@ Esta seção define as regras utilizadas pela equipe para manter o código organ
 
 O projeto será dividido em três partes principais:
 
+```text
 renovafacens/
 ├── backend/
 │   └── Contém todo o código relacionado ao servidor e à lógica do sistema.
@@ -36,6 +37,7 @@ renovafacens/
 ├── database/
 │   └── Contém os arquivos relacionados à criação e configuração do banco de dados, como scripts SQL.
 └── README.md
+```
 
 ## 2. Organização do Back-end
 
@@ -43,6 +45,7 @@ O código do back-end deverá ser organizado de acordo com a responsabilidade de
 
 A estrutura seguirá inicialmente o seguinte padrão:
 
+```text
 backend/
 └── src/
     └── ...
@@ -51,6 +54,7 @@ backend/
             ├── model/
             ├── repository/
             └── service/
+```
 
 ### Model
 
@@ -58,9 +62,9 @@ Responsável por representar os dados utilizados pelo sistema.
 
 Exemplos:
 
-- Usuario
-- Missao
-- Participacao
+- `Usuario`
+- `Missao`
+- `Participacao`
 
 ### Repository
 
@@ -68,9 +72,9 @@ Responsável pela comunicação com o banco de dados.
 
 Exemplos:
 
-- UsuarioRepository
-- MissaoRepository
-- ParticipacaoRepository
+- `UsuarioRepository`
+- `MissaoRepository`
+- `ParticipacaoRepository`
 
 ### Service
 
@@ -78,9 +82,9 @@ Responsável pelas regras de negócio da aplicação.
 
 Exemplos:
 
-- UsuarioService
-- MissaoService
-- ParticipacaoService
+- `UsuarioService`
+- `MissaoService`
+- `ParticipacaoService`
 
 ### Controller
 
@@ -88,13 +92,15 @@ Responsável por receber as requisições do front-end e disponibilizar os endpo
 
 Exemplos:
 
-- UsuarioController
-- MissaoController
-- ParticipacaoController
+- `UsuarioController`
+- `MissaoController`
+- `ParticipacaoController`
 
 O fluxo entre essas camadas deverá seguir, sempre que possível:
 
+```text
 Controller → Service → Repository → Banco de dados
+```
 
 O Controller não deverá acessar o banco de dados diretamente.
 
@@ -106,26 +112,26 @@ Os nomes utilizados no projeto deverão seguir um padrão consistente.
 
 Classes deverão utilizar PascalCase:
 
-- Usuario
-- Missao
-- Participacao
-- UsuarioController
-- MissaoService
+- `Usuario`
+- `Missao`
+- `Participacao`
+- `UsuarioController`
+- `MissaoService`
 
 Variáveis e métodos deverão utilizar camelCase:
 
-- nomeUsuario
-- dataParticipacao
-- buscarMissoes()
-- criarMissao()
+- `nomeUsuario`
+- `dataParticipacao`
+- `buscarMissoes()`
+- `criarMissao()`
 
 Os nomes deverão ser claros e representar sua finalidade. Devem ser evitados nomes genéricos como:
 
-- x
-- teste
-- coisa
-- dados
-- temp
+- `x`
+- `teste`
+- `coisa`
+- `dados`
+- `temp`
 
 ### Banco de dados
 
@@ -133,16 +139,16 @@ Tabelas e colunas deverão seguir um padrão único.
 
 Exemplo de tabelas:
 
-- USUARIO
-- MISSAO
-- PARTICIPACAO
+- `USUARIO`
+- `MISSAO`
+- `PARTICIPACAO`
 
 Exemplo de colunas:
 
-- id
-- nome
-- email
-- data_participacao
+- `id`
+- `nome`
+- `email`
+- `data_participacao`
 
 Não deverão ser utilizados padrões diferentes para representar o mesmo tipo de informação.
 
@@ -156,20 +162,26 @@ Os endpoints deverão utilizar nomes claros e relacionados aos recursos que repr
 
 Exemplos:
 
-GET    /api/missoes
-POST   /api/missoes
-GET    /api/missoes/{id}
-POST   /api/missoes/{id}/participar
-POST   /api/participacoes/{id}/validar
-GET    /api/usuarios/{id}/pontos
+```text
+GET  /api/missoes
+POST /api/missoes
+GET  /api/missoes/{id}
+POST /api/missoes/{id}/participar
+POST /api/participacoes/{id}/validar
+GET  /api/usuarios/{id}/pontos
+```
 
 Deve-se evitar a utilização de nomes de endpoints que misturem a ação com o recurso, como:
 
+```text
 /api/getMissoes
+```
 
 Em vez disso, deve-se utilizar o método HTTP para indicar a operação:
 
+```text
 GET /api/missoes
+```
 
 ## 5. Git e branches
 
@@ -202,6 +214,7 @@ Serão utilizados os seguintes prefixos:
 
 Exemplos:
 
+```text
 feat: cria cadastro de usuario
 
 feat: adiciona endpoint de missoes
@@ -213,6 +226,7 @@ test: adiciona testes de missoes
 docs: atualiza documentacao da API
 
 chore: configura estrutura inicial do backend
+```
 
 Devem ser evitadas mensagens pouco informativas, como:
 
@@ -245,6 +259,7 @@ O front-end não deverá acessar diretamente o banco de dados.
 
 O fluxo esperado é:
 
+```text
 Front-end
     ↓
 API REST
@@ -252,6 +267,7 @@ API REST
 Back-end
     ↓
 Banco de dados
+```
 
 Alterações nos endpoints, nos formatos dos dados ou nas regras de comunicação deverão ser comunicadas aos integrantes responsáveis pelo front-end e back-end.
 
