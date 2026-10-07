@@ -8,6 +8,6 @@ public class TesteController {
 
     @GetMapping("/api/teste")
     public String teste() {
-        return "Backend RenovaFacens funcionando!";
+        return "Oiii~!";
     }
 }
