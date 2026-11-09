@@ -1,22 +1,68 @@
 # RenovaFacens
 
-Projeto desenvolvido para a disciplina UPX 2 do curso de Análise e Desenvolvimento de Sistemas (ADS) da FACENS.
+Projeto desenvolvido para a disciplina Usina de Projetos Experimentais 2 (UPX 2) do curso de Análise e Desenvolvimento de Sistemas (ADS) do Centro Universitário Facens.
+
+Orientador: Prof. Evandro Klengenfuss Veronez.
 
 ## Sobre o projeto
 
-O RenovaFacens tem como objetivo incentivar a realização de ações sociais e ambientais dentro da comunidade acadêmica, permitindo que estudantes participem de missões e recebam pontos de acordo com suas participações.
+A FACENS, por meio da LIS Facens, promove iniciativas beneficentes e de sustentabilidade, como doação de sangue, conscientização sobre o descarte adequado de resíduos e arrecadação de doações. O desafio é ampliar a participação da comunidade acadêmica e externa nessas ações.
 
-O sistema contará com diferentes funcionalidades para estudantes e embaixadores, incluindo cadastro de missões, participação em missões, validação de participações e gerenciamento de pontos.
+O RenovaFacens é um aplicativo que incentiva a realização de boas ações por meio de recompensas. Os usuários participam de missões solidárias e ambientais, têm a presença validada por um embaixador, acumulam pontos e podem trocá-los por prêmios e benefícios oferecidos por apoiadores.
+
+### Perfis de usuário
+
+- **Estudante:** público principal. Escolhe missões, participa delas, acumula pontos e resgata recompensas (prêmios ou horas complementares).
+- **Embaixador:** líder da missão. Cadastra as missões e valida a lista de presença, garantindo que o esforço do aluno seja real.
+- **Apoiador:** parceiro comercial (empresas e comércios). Oferece prêmios e brindes em troca de visibilidade e responsabilidade social.
+
+### Funcionalidades
+
+- Cadastro de usuários (estudantes, embaixadores e apoiadores).
+- Cadastro e consulta de missões.
+- Participação em missões.
+- Validação de presença pelo embaixador.
+- Gerenciamento e extrato de pontos.
+- Cadastro de recompensas pelos apoiadores e resgate pelos estudantes.
 
 ## Tecnologias
 
 - Front-end: HTML, CSS e JavaScript
 - Back-end: Java + Spring Boot
-- Banco de dados: SQL
+- Banco de dados: MySQL/MariaDB (SQL)
 - Acesso ao banco: JDBC
 - Comunicação: API REST utilizando HTTP e JSON
 - Controle de versão: Git + GitHub
 - Testes da API: Postman
+
+## Equipe
+
+| Integrante | Funções |
+|---|---|
+| Caio Kenzo Grigoleto | Gestor do Projeto, Especialista em Deploy |
+| Enzo Valentim Garcia | Product Owner, Analista de Requisitos |
+| Henrique Nóbrega | Analista de Suporte, Analista de Requisitos |
+| Luis Filipe Gonçalves Cintra | Desenvolvedor Back-end, Engenheiro de Teste |
+| Naiara Alves Fioravanti Nunes (líder) | Scrum Master, Desenvolvedor Front-end, Designer UI/UX, Gestora de Projetos |
+| Victor de Moraes Leite | Desenvolvedor Back-end, Engenheiro de Teste |
+
+## Banco de dados
+
+O script de criação do banco está em `database/schema.sql`. Ele cria o banco `renovafacens` e as tabelas:
+
+- `USUARIO`: estudantes, embaixadores e apoiadores (campo `papel`).
+- `MISSAO`: missões criadas por um embaixador.
+- `PARTICIPACAO`: inscrição e presença de um usuário em uma missão, com os pontos ganhos.
+- `RECOMPENSA`: prêmios e brindes oferecidos por apoiadores, com custo em pontos.
+- `RESGATE`: troca de pontos de um usuário por uma recompensa.
+
+O saldo de pontos de cada usuário pode ser consultado na view `VW_SALDO_PONTOS`.
+
+Para criar o banco, execute o script no MySQL/MariaDB (por linha de comando ou importando pelo phpMyAdmin):
+
+```bash
+mysql -u <usuario> -p < database/schema.sql
+```
 
 ---
 
@@ -35,7 +81,7 @@ renovafacens/
 ├── frontend/
 │   └── Contém a interface utilizada pelo usuário e a comunicação com a API.
 ├── database/
-│   └── Contém os arquivos relacionados à criação e configuração do banco de dados, como scripts SQL.
+│   └── Contém os arquivos relacionados à criação e configuração do banco de dados, como o schema.sql.
 └── README.md
 ```
 
@@ -65,6 +111,8 @@ Exemplos:
 - `Usuario`
 - `Missao`
 - `Participacao`
+- `Recompensa`
+- `Resgate`
 
 ### Repository
 
@@ -75,6 +123,8 @@ Exemplos:
 - `UsuarioRepository`
 - `MissaoRepository`
 - `ParticipacaoRepository`
+- `RecompensaRepository`
+- `ResgateRepository`
 
 ### Service
 
@@ -85,6 +135,8 @@ Exemplos:
 - `UsuarioService`
 - `MissaoService`
 - `ParticipacaoService`
+- `RecompensaService`
+- `ResgateService`
 
 ### Controller
 
@@ -95,6 +147,8 @@ Exemplos:
 - `UsuarioController`
 - `MissaoController`
 - `ParticipacaoController`
+- `RecompensaController`
+- `ResgateController`
 
 O fluxo entre essas camadas deverá seguir, sempre que possível:
 
@@ -135,19 +189,20 @@ Os nomes deverão ser claros e representar sua finalidade. Devem ser evitados no
 
 ### Banco de dados
 
-Tabelas e colunas deverão seguir um padrão único.
+Tabelas e colunas deverão seguir um padrão único:
 
-Exemplo de tabelas:
-
-- `USUARIO`
-- `MISSAO`
-- `PARTICIPACAO`
+- Tabelas em MAIÚSCULAS e no singular: `USUARIO`, `MISSAO`, `PARTICIPACAO`, `RECOMPENSA`, `RESGATE`.
+- Colunas em snake_case minúsculo.
+- Chave primária no formato `id_<tabela>` (ex.: `id_usuario`, `id_missao`). Chaves estrangeiras usam o mesmo nome da chave que referenciam.
+- O estado de um registro sempre se chama `situacao`, com valores em MAIÚSCULAS (ex.: `EM_ANDAMENTO`).
+- Datas de início e fim usam `data_inicio` e `data_fim`.
 
 Exemplo de colunas:
 
-- `id`
+- `id_usuario`
 - `nome`
 - `email`
+- `situacao`
 - `data_participacao`
 
 Não deverão ser utilizados padrões diferentes para representar o mesmo tipo de informação.
@@ -169,6 +224,10 @@ GET  /api/missoes/{id}
 POST /api/missoes/{id}/participar
 POST /api/participacoes/{id}/validar
 GET  /api/usuarios/{id}/pontos
+GET  /api/recompensas
+POST /api/recompensas
+POST /api/recompensas/{id}/resgatar
+GET  /api/usuarios/{id}/resgates
 ```
 
 Deve-se evitar a utilização de nomes de endpoints que misturem a ação com o recurso, como:
@@ -195,6 +254,7 @@ Branches utilizadas no projeto:
 - `feature/usuarios`
 - `feature/missoes`
 - `feature/participacoes`
+- `feature/recompensas`
 
 Cada branch `feature` deverá ser utilizada para o desenvolvimento da funcionalidade correspondente.
 
